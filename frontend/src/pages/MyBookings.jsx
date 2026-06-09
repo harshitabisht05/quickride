@@ -10,6 +10,7 @@ function Bookings() {
 
   const fetchBookings = async () => {
     try {
+      
       const response = await api.get("/bookings/");
       setBookings(response.data);
     } catch (error) {
@@ -17,18 +18,46 @@ function Bookings() {
     }
   };
 
+const cancelBooking = async (bookingId) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await api.delete(`/bookings/${bookingId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    fetchBookings();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
   return (
-    <div className="booking-card">
+    <div>
       <h2>My Bookings</h2>
+<div className="booking-list">
 
       {bookings.map((booking) => (
-        <div key={booking.id}>
+        <div className="booking-item" key={booking.id}>
           <p>Booking ID: {booking.id}</p>
-          <p>Vehicle ID: {booking.vehicle_id}</p>
-          <p>Start: {booking.start_time}</p>
-          <p>End: {booking.end_time}</p>
+          <p>Vehicle: {booking.vehicle_name}</p>
+          <p>
+            Start: {new Date(booking.start_time).toLocaleString()}
+          </p>
+          <p>
+            End: {new Date(booking.end_time).toLocaleString()}
+          </p>
+          <button
+  onClick={() => cancelBooking(booking.id)}
+  className="cancel-btn"
+>
+  Cancel Booking
+</button>
         </div>
       ))}
+    </div>
     </div>
   );
 }

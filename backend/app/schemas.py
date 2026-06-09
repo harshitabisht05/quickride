@@ -53,6 +53,8 @@ class BookingResponse(BaseModel):
     user_id: int
     start_time: datetime
     end_time: datetime
-
+    
+    vehicle_name: str
+    
     class Config:
         from_attributes = True

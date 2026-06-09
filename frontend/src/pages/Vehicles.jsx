@@ -20,11 +20,15 @@ function Vehicles() {
   };
 
    const filteredVehicles = vehicles.filter((vehicle) =>
-    vehicle.name.toLowerCase().includes(search.toLowerCase())
+    vehicle.name.toLowerCase().includes(search.toLowerCase()) || vehicle.type.toLowerCase().includes(search.toLowerCase())
 );
   return (
-    <div>
+    <div className="vehicles-container">
+      <div className="vehicles-header">
       <h2>Available Vehicles</h2>
+       <p>Find the perfect ride for your journey.</p>
+</div>
+       <div className="search-container">
         <input
           className="search-box"
           type="text"
@@ -32,6 +36,7 @@ function Vehicles() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        </div>
 <div className="vehicle-grid">
       {filteredVehicles.map((vehicle) => (
         <VehicleCard
@@ -44,7 +49,8 @@ function Vehicles() {
         />
       ))}
       </div>
-    </div>
+      </div>
+
   );
 }
 

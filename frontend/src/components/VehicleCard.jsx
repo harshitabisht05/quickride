@@ -1,4 +1,3 @@
-import "../App.css";
 import { useNavigate } from "react-router-dom";
 
 function VehicleCard({ id, name, type, price, available }) {

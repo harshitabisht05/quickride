@@ -1,18 +1,49 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
-  return (
-    <nav className="navbar">
-      <h1>QuickRide</h1>
+  const token = localStorage.getItem("token");
 
-      <div className="nav-links">
-        <Link to="/">Home</Link>
-        <Link to="/vehicles">Vehicles</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/regiter">Register</Link>
-        <Link to ="/bookings">My Bookings</Link>
-      </div>
-    </nav>
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
+  return (
+    <div className="navbar-wrapper">
+      <nav className="navbar-modern">
+        <div className="logo">
+          ⚡ QuickRide
+        </div>
+
+        <div className="nav-center">
+          <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}>Home</NavLink>
+          <NavLink to="/vehicles" className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}>Vehicles</NavLink>
+
+          {token && (
+            <NavLink to="/bookings" className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}>My Bookings</NavLink>
+          )}
+        </div>
+
+        <div className="nav-right">
+          {token ? (
+            <button
+              className="nav-btn"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <NavLink to="/login">Login</NavLink>
+
+              <button className="nav-btn">
+                <NavLink to="/register" className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}>Register</NavLink>
+              </button>
+            </>
+          )}
+        </div>
+      </nav>
+    </div>
   );
 }
 
