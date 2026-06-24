@@ -6,35 +6,46 @@ function Home() {
 
   return (
     <>
-      {/* Hero Section */}
       <section className="hero">
-        
-
+        <div className="hero-content">
           <span className="hero-badge">
-            🚀 Smart Vehicle Rental Platform
+            Smart vehicle rentals
           </span>
 
           <h1>
-            Rent Cars & Bikes
-            <br />
-            Anytime, Anywhere
+            Rent cars and bikes without the counter queue.
           </h1>
 
           <p>
-            Affordable, fast and secure rentals
-            for your daily commute and travel.
+            Book a clean, available ride in seconds for errands, commutes, and weekend plans.
           </p>
 
-          <button
-            onClick={() => navigate("/vehicles")}
-          >
-            Browse Vehicles
-          </button>
+          <div className="hero-actions">
+            <button onClick={() => navigate("/vehicles")}>
+              Browse Vehicles
+            </button>
+            <span>From Rs 99/hour</span>
+          </div>
+        </div>
 
-      
+        <div className="hero-panel" aria-hidden="true">
+          <div className="hero-vehicle">
+            <span className="car-body" />
+            <span className="car-window" />
+            <span className="car-wheel wheel-left" />
+            <span className="car-wheel wheel-right" />
+          </div>
+          <div className="hero-stat">
+            <strong>24/7</strong>
+            <span>Instant pickup</span>
+          </div>
+          <div className="hero-stat">
+            <strong>3 min</strong>
+            <span>Average booking</span>
+          </div>
+        </div>
       </section>
 
-      {/* How It Works */}
       <section className="how-it-works">
 
         <h2>How It Works</h2>
@@ -70,10 +81,8 @@ function Home() {
       </section>
 
 
-      {/* Live Vehicles From Backend */}
       <HomeVehicles />
 
-      {/* Why Choose QuickRide */}
       <section className="features-section">
 
         <h2>Why Choose QuickRide?</h2>
@@ -81,22 +90,26 @@ function Home() {
         <div className="features-grid">
 
           <div className="feature-card">
-            <h3>⚡ Instant Booking</h3>
+            <span className="feature-icon">01</span>
+            <h3>Instant Booking</h3>
             <p>Book vehicles within seconds.</p>
           </div>
 
           <div className="feature-card">
-            <h3>🔒 Secure Login</h3>
+            <span className="feature-icon">02</span>
+            <h3>Secure Login</h3>
             <p>Protected user authentication using JWT.</p>
           </div>
 
           <div className="feature-card">
-            <h3>🚗 Real-Time Availability</h3>
+            <span className="feature-icon">03</span>
+            <h3>Real-Time Availability</h3>
             <p>See only vehicles that are available.</p>
           </div>
 
           <div className="feature-card">
-            <h3>💰 Transparent Pricing</h3>
+            <span className="feature-icon">04</span>
+            <h3>Transparent Pricing</h3>
             <p>No hidden charges. Pay only what you see.</p>
           </div>
 
@@ -104,7 +117,6 @@ function Home() {
 
       </section>
 
-      {/* CTA Section */}
       <section className="cta-section">
 
         <h2>Ready To Start Your Journey?</h2>
@@ -122,9 +134,9 @@ function Home() {
       </section>
 
       <footer className="footer">
-  <h3>QuickRide</h3>
-  <p>Fast, affordable and secure vehicle rentals.</p>
-</footer>
+        <h3>QuickRide</h3>
+        <p>Fast, affordable and secure vehicle rentals.</p>
+      </footer>
     </>
   );
 }

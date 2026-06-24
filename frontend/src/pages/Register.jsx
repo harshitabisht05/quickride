@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function Register() {
@@ -8,21 +8,30 @@ function Register() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleRegister = async () => {
+    if (!name || !phone || !password) {
+      setError("Fill in all fields to create your account.");
+      return;
+    }
+
     try {
+      setSubmitting(true);
+      setError("");
       await api.post("/auth/register", {
         name,
         phone,
         password,
       });
 
-      alert("Registration Successful");
       navigate("/login");
     } catch (error) {
-        console.log(JSON.stringify(error.response?.data, null, 2));
-        console.error(error);
-      alert("Registration Failed");
+      console.error(error);
+      setError(error.response?.data?.detail || "Registration failed. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -30,6 +39,7 @@ function Register() {
     <div className="auth-container">
       <div className="auth-card">
         <h2>Register</h2>
+        <p>Create your account to reserve vehicles faster.</p>
 
         <input
           type="text"
@@ -52,9 +62,15 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button onClick={handleRegister}>
-          Register
+        <button onClick={handleRegister} disabled={submitting}>
+          {submitting ? "Creating account..." : "Register"}
         </button>
+
+        {error && <p className="error-message">{error}</p>}
+
+        <p className="auth-switch">
+          Already registered? <Link to="/login">Login</Link>
+        </p>
       </div>
     </div>
   );

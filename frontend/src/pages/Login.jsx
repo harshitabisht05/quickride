@@ -1,30 +1,40 @@
 import { useState } from "react";
 import api from "../services/api";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-   const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
+    if (!phone || !password) {
+      setError("Enter your phone number and password.");
+      return;
+    }
+
     try {
+      setSubmitting(true);
+      setError("");
       const response = await api.post("/auth/login", {
         phone,
         password,
       });
-       navigate("/vehicles");
-      console.log(response.data);
 
       localStorage.setItem(
         "token",
         response.data.access_token
       );
 
-      alert("Login Successful");
+      navigate("/vehicles");
     } catch (error) {
       console.error(error);
-      alert("Login Failed");
+      setError(error.response?.data?.detail || "Login failed. Check your credentials.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -32,6 +42,7 @@ function Login() {
     <div className="auth-container"> 
     <div className="auth-card">
       <h2>Login</h2>
+      <p>Welcome back. Sign in to book and manage your rides.</p>
 
       <input
         type="text"
@@ -40,8 +51,6 @@ function Login() {
         onChange={(e) => setPhone(e.target.value)}
       />
 
-      <br />
-
       <input
         type="password"
         placeholder="Password"
@@ -49,11 +58,15 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <br />
-
-      <button onClick={handleLogin}>
-        Login
+      <button onClick={handleLogin} disabled={submitting}>
+        {submitting ? "Signing in..." : "Login"}
       </button>
+
+      {error && <p className="error-message">{error}</p>}
+
+      <p className="auth-switch">
+        New to QuickRide? <Link to="/register">Create an account</Link>
+      </p>
     </div>
     </div>
   );

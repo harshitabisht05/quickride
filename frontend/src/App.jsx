@@ -13,17 +13,29 @@ import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   return (
     <>
-    <Navbar />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/vehicles" element={<Vehicles />} />
-      <Route path="/booking/:vehicleId" element={<Booking />} />
-      <Route path="/bookings" element={<MyBookings />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/bookings" element={<ProtectedRoute> <MyBookings /></ProtectedRoute>}/>
-      <Route path="/booking/:vehicleId" element={ <ProtectedRoute><Booking /></ProtectedRoute>}/>
-    </Routes>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/vehicles" element={<Vehicles />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/bookings"
+          element={
+            <ProtectedRoute>
+              <MyBookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/booking/:vehicleId"
+          element={
+            <ProtectedRoute>
+              <Booking />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </>
   );
 }
