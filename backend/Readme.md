@@ -166,6 +166,13 @@ POST /vehicles/
   "name": "Sedan",
   "type": "Car",
   "price_per_hour": 10.0,
+  "image_url": "https://example.com/sedan.jpg",
+  "description": "Comfortable city sedan with smooth handling and roomy luggage space.",
+  "fuel_type": "Petrol",
+  "transmission": "Automatic",
+  "seats": 5,
+  "rating": 4.7,
+  "pickup_location": "Downtown Hub",
   "available": true
 }
 ```

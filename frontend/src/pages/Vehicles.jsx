@@ -23,9 +23,15 @@ function Vehicles() {
     fetchVehicles();
   }, []);
 
+  const searchValue = search.toLowerCase();
   const filteredVehicles = vehicles.filter((vehicle) =>
-    vehicle.name.toLowerCase().includes(search.toLowerCase()) ||
-    vehicle.type.toLowerCase().includes(search.toLowerCase())
+    [
+      vehicle.name,
+      vehicle.type,
+      vehicle.fuel_type,
+      vehicle.transmission,
+      vehicle.pickup_location,
+    ].some((value) => value?.toLowerCase().includes(searchValue))
   );
 
   return (
@@ -62,6 +68,13 @@ function Vehicles() {
             name={vehicle.name}
             type={vehicle.type}
             price={vehicle.price_per_hour}
+            imageUrl={vehicle.image_url}
+            description={vehicle.description}
+            fuelType={vehicle.fuel_type}
+            transmission={vehicle.transmission}
+            seats={vehicle.seats}
+            rating={vehicle.rating}
+            pickupLocation={vehicle.pickup_location}
             available={vehicle.available}
           />
         ))}

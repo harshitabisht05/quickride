@@ -20,6 +20,13 @@ class Vehicle(Base):
     name = Column(String(100), nullable=False)
     type = Column(String(50), nullable=False)
     price_per_hour = Column(Float, nullable=False)
+    image_url = Column(String(500), nullable=True)
+    description = Column(String(500), nullable=True)
+    fuel_type = Column(String(30), nullable=True)
+    transmission = Column(String(30), nullable=True)
+    seats = Column(Integer, nullable=True)
+    rating = Column(Float, default=4.5)
+    pickup_location = Column(String(120), nullable=True)
     available = Column(Boolean, default=True)
 
     bookings = relationship("Booking", back_populates="vehicle")  # ✅ Must match Booking.vehicle

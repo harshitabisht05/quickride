@@ -49,6 +49,13 @@ function HomeVehicles() {
             name={vehicle.name}
             type={vehicle.type}
             price={vehicle.price_per_hour}
+            imageUrl={vehicle.image_url}
+            description={vehicle.description}
+            fuelType={vehicle.fuel_type}
+            transmission={vehicle.transmission}
+            seats={vehicle.seats}
+            rating={vehicle.rating}
+            pickupLocation={vehicle.pickup_location}
             available={vehicle.available}
           />
         ))}

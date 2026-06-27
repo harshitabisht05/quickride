@@ -1,4 +1,3 @@
-from pydantic import BaseModel
 from typing import Optional
 from pydantic import BaseModel, constr
 
@@ -27,6 +26,13 @@ class VehicleCreate(BaseModel):
     name: str
     type: str
     price_per_hour: float
+    image_url: Optional[str] = None
+    description: Optional[str] = None
+    fuel_type: Optional[str] = None
+    transmission: Optional[str] = None
+    seats: Optional[int] = None
+    rating: float = 4.5
+    pickup_location: Optional[str] = None
     available: bool = True
 
 # Vehicle Response
@@ -35,6 +41,13 @@ class VehicleResponse(BaseModel):
     name: str
     type: str
     price_per_hour: float
+    image_url: Optional[str] = None
+    description: Optional[str] = None
+    fuel_type: Optional[str] = None
+    transmission: Optional[str] = None
+    seats: Optional[int] = None
+    rating: float = 4.5
+    pickup_location: Optional[str] = None
     available: bool
 
     class Config:
