@@ -36,43 +36,82 @@ function Register() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h2>Register</h2>
-        <p>Create your account to reserve vehicles faster.</p>
-
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <input
-          type="text"
-          placeholder="Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button onClick={handleRegister} disabled={submitting}>
-          {submitting ? "Creating account..." : "Register"}
-        </button>
-
-        {error && <p className="error-message">{error}</p>}
-
-        <p className="auth-switch">
-          Already registered? <Link to="/login">Login</Link>
+    <section className="auth-page register-page">
+      <div className="auth-visual">
+        <span className="auth-kicker">Get started</span>
+        <h1>Your next ride is one account away.</h1>
+        <p>
+          Create a QuickRide profile to book faster, track reservations, and
+          keep your rental details ready whenever plans change.
         </p>
+
+        <div className="auth-route-card" aria-hidden="true">
+          <div className="auth-route-line">
+            <span />
+            <span />
+          </div>
+          <div>
+            <strong>3 min</strong>
+            <span>average setup</span>
+          </div>
+          <div>
+            <strong>0 hidden</strong>
+            <span>extra charges</span>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div className="auth-form-wrap">
+        <div className="auth-card">
+          <span className="auth-eyebrow">Create account</span>
+          <h2>Join QuickRide</h2>
+          <p>Create your account to reserve vehicles faster.</p>
+
+          <div className="input-group">
+            <label htmlFor="register-name">Full Name</label>
+            <input
+              id="register-name"
+              type="text"
+              placeholder="Enter full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="register-phone">Phone Number</label>
+            <input
+              id="register-phone"
+              type="text"
+              placeholder="Enter phone number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="register-password">Password</label>
+            <input
+              id="register-password"
+              type="password"
+              placeholder="Create password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button onClick={handleRegister} disabled={submitting}>
+            {submitting ? "Creating account..." : "Create account"}
+          </button>
+
+          {error && <p className="error-message">{error}</p>}
+
+          <p className="auth-switch">
+            Already registered? <Link to="/login">Sign in</Link>
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 

@@ -30,9 +30,6 @@ function HomeVehicles() {
 
   return (
     <section className="home-vehicles">
-
-      <h2>Available Right Now</h2>
-
       <div className="vehicle-grid">
         {status === "loading" && [1, 2, 3].map((item) => (
           <div className="vehicle-card vehicle-skeleton" key={item}>

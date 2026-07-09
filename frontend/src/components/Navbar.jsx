@@ -1,72 +1,95 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
-  const token = localStorage.getItem("token");
-  const [showMenu, setShowMenu] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  useEffect(() => {
+    const checkToken = () => {
+      setToken(localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", checkToken);
+    window.addEventListener("authChange", checkToken);
+
+    return () => {
+      window.removeEventListener("storage", checkToken);
+      window.removeEventListener("authChange", checkToken);
+    };
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setShowMenu(false);
-    window.location.href = "/";
+    window.dispatchEvent(new Event("authChange"));
   };
 
-  const closeMenu = () => setShowMenu(false);
-
   return (
-    <div className="navbar-wrapper">
-      <nav className="navbar-modern">
-        <div className="logo">
-          <span className="logo-mark">Q</span>
+    <header className="navbar-container">
+      <nav className="navbar">
+        <NavLink to="/" className="nav-brand">
           QuickRide
+        </NavLink>
+
+        <div className="nav-links">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/vehicles"
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+          >
+            Vehicles
+          </NavLink>
+
+          {token && (
+            <NavLink
+              to="/bookings"
+              className={({ isActive }) =>
+                isActive ? "nav-item active" : "nav-item"
+              }
+            >
+              Bookings
+            </NavLink>
+          )}
         </div>
 
-        <button
-          type="button"
-          className="nav-toggle"
-          onClick={() => setShowMenu((prev) => !prev)}
-          aria-label="Toggle navigation menu"
-          aria-expanded={showMenu}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-
-        <div className={`nav-menu ${showMenu ? "show-menu" : ""}`}>
-          <div className="nav-center">
-            <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"} onClick={closeMenu}>
-              Home
-            </NavLink>
-            <NavLink to="/vehicles" className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"} onClick={closeMenu}>
-              Vehicles
-            </NavLink>
-            {token && (
-              <NavLink to="/bookings" className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"} onClick={closeMenu}>
-                My Bookings
+        <div className="nav-actions">
+          {token ? (
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive ? "nav-item active" : "nav-item"
+                }
+              >
+                Login
               </NavLink>
-            )}
-          </div>
 
-          <div className="nav-right">
-            {token ? (
-              <button className="nav-btn" onClick={handleLogout}>
-                Logout
-              </button>
-            ) : (
-              <>
-                <NavLink to="/login" className="nav-link" onClick={closeMenu}>
-                  Login
-                </NavLink>
-                <NavLink to="/register" className="nav-btn nav-link" onClick={closeMenu}>
-                  Register
-                </NavLink>
-              </>
-            )}
-          </div>
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  isActive ? "nav-cta active" : "nav-cta"
+                }
+              >
+                Sign up
+              </NavLink>
+            </>
+          )}
         </div>
       </nav>
-    </div>
+    </header>
   );
 }
 
