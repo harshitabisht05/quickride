@@ -191,3 +191,21 @@ def startup_event():
 @app.get("/")
 def read_root():
     return {"message": "QuickRide Backend Running 🚗"}
+
+@app.get("/health")
+def health_check():
+    try:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+
+        return {
+            "status": "ok",
+            "database": "connected"
+        }
+
+    except Exception as e:
+        return {
+            "status": "error",
+            "database": "disconnected",
+            "error": str(e)
+        }
